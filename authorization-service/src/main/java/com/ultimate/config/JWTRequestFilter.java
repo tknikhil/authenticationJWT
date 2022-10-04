@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,9 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.ultimate.service.JwtUserDetailsService;
 import com.ultimate.utill.JWTTokenUtil;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 	@Autowired
@@ -40,11 +37,13 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 		final String requestTokenHeader = request.getHeader("Authorization");
 
 		String username = null;
-		String jwtToken = null;
+		String jwtToken=null;
 
 		// JWT Token is in the form "Bearer Token".Remove Bearer word and get the token
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
-			requestTokenHeader.substring(7);
+			jwtToken= requestTokenHeader.substring(7);
+			System.out.println("doFilterInternal :"+requestTokenHeader);
+			System.out.println(jwtToken);
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 			} catch (Exception e) {

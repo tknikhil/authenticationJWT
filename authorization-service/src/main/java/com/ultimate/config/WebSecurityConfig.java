@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 @Configuration
@@ -29,7 +28,7 @@ public class WebSecurityConfig{
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth)throws Exception {
-		auth.userDetailsService(jwtDetailsService);
+		auth.userDetailsService(jwtDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 	}
 	
 //	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -39,10 +38,10 @@ public class WebSecurityConfig{
 //	@Bean
 //	AuthenticationManager ldapAuthenticationManager(BaseLdapPathContextSource contextSource) {}
 	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 	
 	  @Bean
       public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
