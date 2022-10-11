@@ -1,0 +1,13 @@
+
+
+tracer.property:"I am the Default"
+spring.jpa.database:"POSTGRESQL"
+spring.datasource.platform:"postgres"
+spring.jpa.show-sql:"true"
+spring.database.driverClass:"org.postgresql.Driver"
+spring.datasource.url:"jdbc:postgresql://database:5422/egale_eye_local"
+spring.datasource.username:"postgres"
+spring.datasource.password:"p0stgr@s"
+spring.datasource.testWhileIdle:"true"
+spring.datasource.validationQuery:"SELECT 1"
+spring.jpa.properties.hibernate.dialect:"org.hibernate.dialect.PostgreSQLDialect"

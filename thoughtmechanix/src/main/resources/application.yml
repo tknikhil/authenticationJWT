@@ -1,0 +1,15 @@
+
+
+server:
+  port: 7000
+  
+spring:
+  profiles:
+    active: 
+    - native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations:
+          - /thoughtmechanix/src/main/resources/config/licensingservice/licensingservice.yml

@@ -1,6 +1,7 @@
 package com.ultimate.utill;
 
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,11 +60,11 @@ public class JWTTokenUtil implements Serializable {
 
 	// defining claims of the token ,like issuer,Expiration,subject,Id
 	private String doGenerateToken(Map<String, Object> claims, String username) {
-//		String encodedString = Base64.getEncoder().encodeToString(secret.getBytes());
+		String encodedString = Base64.getEncoder().encodeToString(secret.getBytes());
 		System.out.println(secret);
 		return Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-				.signWith(SignatureAlgorithm.HS512, secret).compact();
+				.signWith(SignatureAlgorithm.HS512, encodedString).compact();
 
 	}
 	
