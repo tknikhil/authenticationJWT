@@ -11,10 +11,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.ultimate.utill.JWTAuthenticationEntryPoint;
+import com.ultimate.utill.JWTRequestFilter;
+
+/**
+ * 
+ * @author Nikhil TK
+ * 
+ * @see AuthenticationManager
+ * @see SecurityFilterChain
+ * 
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -29,7 +40,8 @@ public class WebSecurityConfig {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(jwtDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+//		NoOpPasswordEncoder.getInstance() is just because we are not storing password Encrypted form in database 
+		auth.userDetailsService(jwtDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
 	}
 
 	@Bean
@@ -40,13 +52,13 @@ public class WebSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-		// We don't need CSRF for this example
+		// We don't need CSRF for this
 		httpSecurity.csrf().disable()
-				// dont authenticate this particular request
-				.authorizeRequests().antMatchers("/authenticate").permitAll()
-				.antMatchers("/auth/v1/swagger-ui/").permitAll().
+				// don't authenticate this particular request
+				.authorizeRequests().antMatchers("/login").permitAll()
+				.antMatchers("/swagger-ui/**").permitAll()
 				// all other requests need to be authenticated
-				anyRequest().authenticated().and().
+				.anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
 				// store user's state.
 				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()

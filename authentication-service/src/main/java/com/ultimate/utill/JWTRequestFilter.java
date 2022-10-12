@@ -1,16 +1,12 @@
-package com.ultimate.config;
+package com.ultimate.utill;
 
-import ch.qos.logback.core.CoreConstants;
 import java.io.IOException;
-import java.lang.invoke.MethodHandles;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,20 +16,31 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.ultimate.service.JwtUserDetailsService;
-import com.ultimate.utill.JWTTokenUtil;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * <p>For any incoming request this Filter class gets executed. It checks if the request has a valid JWT token. 
+ * If it has a valid JWT Token then it sets the Authentication in the context, to specify that the current user
+ *  is authenticated</p>
+ * 
+ * @author Nikhil TK
+ * @see OncePerRequestFilter
+ * @see UsernamePasswordAuthenticationToken
+ */
 
 @Component
+@Slf4j
 public class JWTRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUserDetailsService jwtUserDetailsService;
-
-        private JWTTokenUtil jwtTokenUtil;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	@Autowired
+	private JWTTokenUtil jwtTokenUtil;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		log.info("doFilterInternal");
 		final String requestTokenHeader = request.getHeader("Authorization");
 
 		String username = null;
@@ -41,19 +48,18 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
 		// JWT Token is in the form "Bearer Token".Remove Bearer word and get the token
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+			log.info("doFilterInternal- if");
 			jwtToken = requestTokenHeader.substring(7);
-			
+
 			try {
-				String Demo = jwtTokenUtil.getUsernameFromToken(jwtToken);
-                                System.out.println(Demo);
-//                                username;
+				log.info("doFilterInternal- try");
+				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 //				jwtTokenUtil.decodeToken(req);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
-                    System.out.println(username);
-			LOGGER.warn("JWT Token does not begin with Bearer String");
+			log.warn("JWT Token does not begin with Bearer String");
 		}
 
 		// Once we get the Token validate it

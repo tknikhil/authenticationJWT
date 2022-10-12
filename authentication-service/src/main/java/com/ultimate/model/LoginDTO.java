@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,27 +20,6 @@ import lombok.Data;
 @Table(name = "user_details", catalog = "UltimatePosDB", schema = "public")
 @XmlRootElement
 @Data
-//@NamedQueries({
-//    @NamedQuery(name = "UserDetails.findAll", query = "SELECT u FROM UserDetails u"),
-//    @NamedQuery(name = "UserDetails.findByUserNo", query = "SELECT u FROM UserDetails u WHERE u.userNo = :userNo"),
-//    @NamedQuery(name = "UserDetails.findByUserCode", query = "SELECT u FROM UserDetails u WHERE u.userCode = :userCode"),
-//    @NamedQuery(name = "UserDetails.findByUserFirstName", query = "SELECT u FROM UserDetails u WHERE u.userFirstName = :userFirstName"),
-//    @NamedQuery(name = "UserDetails.findByUserLastName", query = "SELECT u FROM UserDetails u WHERE u.userLastName = :userLastName"),
-//    @NamedQuery(name = "UserDetails.findByPassword", query = "SELECT u FROM UserDetails u WHERE u.password = :password"),
-//    @NamedQuery(name = "UserDetails.findByGroupNo", query = "SELECT u FROM UserDetails u WHERE u.groupNo = :groupNo"),
-//    @NamedQuery(name = "UserDetails.findByUserPhone", query = "SELECT u FROM UserDetails u WHERE u.userPhone = :userPhone"),
-//    @NamedQuery(name = "UserDetails.findByUserEmail", query = "SELECT u FROM UserDetails u WHERE u.userEmail = :userEmail"),
-//    @NamedQuery(name = "UserDetails.findByStartDateTime", query = "SELECT u FROM UserDetails u WHERE u.startDateTime = :startDateTime"),
-//    @NamedQuery(name = "UserDetails.findByEndDateTime", query = "SELECT u FROM UserDetails u WHERE u.endDateTime = :endDateTime"),
-//    @NamedQuery(name = "UserDetails.findByPasswordLoginAttempt", query = "SELECT u FROM UserDetails u WHERE u.passwordLoginAttempt = :passwordLoginAttempt"),
-//    @NamedQuery(name = "UserDetails.findByInactiveFlg", query = "SELECT u FROM UserDetails u WHERE u.inactiveFlg = :inactiveFlg"),
-//    @NamedQuery(name = "UserDetails.findByCrtUsrNo", query = "SELECT u FROM UserDetails u WHERE u.crtUsrNo = :crtUsrNo"),
-//    @NamedQuery(name = "UserDetails.findByCrtDate", query = "SELECT u FROM UserDetails u WHERE u.crtDate = :crtDate"),
-//    @NamedQuery(name = "UserDetails.findByCrtTrmnlNm", query = "SELECT u FROM UserDetails u WHERE u.crtTrmnlNm = :crtTrmnlNm"),
-//    @NamedQuery(name = "UserDetails.findByUpdUsrNo", query = "SELECT u FROM UserDetails u WHERE u.updUsrNo = :updUsrNo"),
-//    @NamedQuery(name = "UserDetails.findByUpdDate", query = "SELECT u FROM UserDetails u WHERE u.updDate = :updDate"),
-//    @NamedQuery(name = "UserDetails.findByUpdTrmnlNm", query = "SELECT u FROM UserDetails u WHERE u.updTrmnlNm = :updTrmnlNm"),
-//    @NamedQuery(name = "UserDetails.findByUpdCnt", query = "SELECT u FROM UserDetails u WHERE u.updCnt = :updCnt")})
 public class LoginDTO implements Serializable {
 
     @JoinColumn(name = "group_no", referencedColumnName = "group_no")
